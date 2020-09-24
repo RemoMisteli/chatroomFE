@@ -1,0 +1,24 @@
+.element {
+    margin: auto;
+    width: 50%;
+}
+.title{
+    text-align: center;
+}
+.chatMessages {
+    border-style: solid;
+    border-color: black;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+.usernNameField{
+    width: 10%;
+
+}
+.messageField{
+    width: 50%;
+}
+.sendButton{
+    width: 10%;
+    min-width: 50px;
+}
