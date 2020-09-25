@@ -16,36 +16,67 @@
     <div class="chatMessages element" id="chatMessages">
         <div id="messages"></div>
 
-        
-Remo: hey <br>
-Fred: hey, how are you?<br>
-Remo: I am fine you?<br>
-   </div>
+
+        Remo: hey <br>
+        Fred: hey, how are you?<br>
+        Remo: I am fine you?<br>
+    </div>
 
 
     <div class="element">
 
-        Name:<input class="usernNameField" name="username" placeholder="your name">
-        Message:<input class="messageField" name="message" placeholder="your message">
-        <button class="sendButton" name="send" onclick="myFunction()">send</button>
+        Name:<input class="usernNameField" id="usernameField" placeholder="your name">
+        Message:<input class="messageField" id="messageField" placeholder="your message">
+        <button class="sendButton" onclick="send()">send</button>
     </div>
-   
-  
+
+
+    <script>window.onload = function () {
+            getMessage();
+        };
+        window.setInterval(function () {
+            getMessage();
+        }, 5000);
+    </script>
 
     <script>
         var xmlhttp = new XMLHttpRequest();
         var url = "http://localhost:8080/chatroom/messages/";
-        
-        xmlhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("messages").innerHTML = this.responseText;
-          }
-        };
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();
-        
-        
-        </script>
+
+        function getMessage() {
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("messages").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+        }
+
+    </script>
+
+    <script>
+        function send() {
+            var sendUrl = url + "send/";
+            var name = document.getElementById('usernameField').value;
+            var message = document.getElementById('messageField').value;
+            if (name != '' && message != '') {
+                document.getElementById('usernameField').value = "";
+                document.getElementById('messageField').value = "";
+
+                sendUrl = sendUrl + name + "/";
+                sendUrl = sendUrl + message;
+
+                xmlhttp.open("GET", sendUrl, true);
+                xmlhttp.send();
+
+                getMessage();
+            }
+
+
+
+        }
+    </script>
 </body>
 
 </html>
