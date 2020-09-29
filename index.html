@@ -14,12 +14,10 @@
 
 
     <div class="chatMessages element" id="chatMessages">
-        <div id="messages"></div>
+        <div id="messagesField">
 
 
-        Remo: hey <br>
-        Fred: hey, how are you?<br>
-        Remo: I am fine you?<br>
+        </div>
     </div>
 
 
@@ -31,22 +29,53 @@
     </div>
 
 
+
+    <script>
+        function writeToHtml() {
+
+            for(var i = 0; i < messages.length; i++) {
+
+                if (document.getElementById("messageId-" + messages[i].id) == null) {
+
+                    var element = document.createElement("div");
+
+                    var textValue = document.createTextNode(messages[i].user + ": " + messages[i].message);
+                    element.appendChild(textValue);
+
+                    element.id = "messageId-" + messages[i].id;
+
+
+                    var parentElement = document.getElementById("messagesField");
+                    parentElement.appendChild(element);
+
+                }
+            }
+        }
+
+    </script>
+
+
+
     <script>window.onload = function () {
             getMessage();
         };
         window.setInterval(function () {
             getMessage();
-        }, 5000);
+        }, 500);
     </script>
 
     <script>
         var xmlhttp = new XMLHttpRequest();
         var url = "http://localhost:8080/chatroom/messages/";
 
+        var messages;
+
         function getMessage() {
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("messages").innerHTML = this.responseText;
+                    messages = JSON.parse(this.responseText)
+                    writeToHtml();
+
                 }
             };
             xmlhttp.open("GET", url, true);
