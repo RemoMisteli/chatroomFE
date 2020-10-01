@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>ChatRoom</title>
+</head>
+
+<body>
+    <div class="title">
+        <h1>ChatRoom</h1>
+        <a class="" href="index.html">ChatRoom</a>
+        <a class="active" href="search.html">Search</a>
+
+    </div>
+
+    <div class="element description">
+        <p>here you can search for Messages</p>
+    </div>
+
+
+    <div class="element inputs">
+        Search:
+        <select id="searchedFor">
+            <option value="message">Message</option>
+            <option value="user">User</option>
+        </select>
+        <input id="searchField">
+        <button class="sendButton" onclick="search()">send</button>
+    </div>
+
+
+    <div class="chatMessages element" id="chatMessages">
+        <div id="messagesField">
+        </div>
+    </div>
+
+</body>
+
+
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    var url = "http://localhost:8080/chatroom/messages/search/";
+
+    var messages;
+
+    function search() {
+
+
+        var searchFor = document.getElementById('searchedFor').value;
+        var searchAtributte = document.getElementById('searchField').value;
+
+
+        if (searchAtributte != '') {
+            cleanResults()
+            messages=null;
+
+            var searchUrl = url + searchFor + "/" + searchAtributte;
+
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    messages = JSON.parse(this.responseText);
+                    writeToHtml();
+
+                }
+            };
+            xmlhttp.open("GET", searchUrl, true);
+            xmlhttp.send();
+        }
+    }
+
+</script>
+
+<script>
+    function writeToHtml() {
+
+        for (var i = 0; i < messages.length; i++) {
+
+            if (document.getElementById("messageId-" + messages[i].id) == null) {
+
+                var element = document.createElement("div");
+
+                var textValue = document.createTextNode(messages[i].user + ": " + messages[i].message + " | " + formatDate(messages[i].date));
+
+
+                element.appendChild(textValue);
+
+                element.id = "messageId-" + messages[i].id;
+
+
+                var parentElement = document.getElementById("messagesField");
+                parentElement.appendChild(element);
+
+            }
+        }
+    }
+
+    function cleanResults(){
+         document.getElementById("messagesField").innerHTML='';
+    }
+
+</script>
+<script>
+    function formatDate(date) {
+        var today = new Date();
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+
+        if (today.getDate() == day && today.getMonth() + 1 == month && today.getFullYear() == year) {
+
+            return [d.getHours(), d.getMinutes()].join(':');
+
+        } else {
+
+
+            return [day, month, year].join('-');
+
+        }
+    }
+</script>
+
+</html>
