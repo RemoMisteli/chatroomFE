@@ -36,8 +36,10 @@ h1{
     padding: 10px;
     height: 400px;
     overflow-y: scroll;
-  
-    
+}
+.chat{
+    display: flex;
+    flex-direction: column-reverse;
 }
 .usernNameField{
     width: 10%;
