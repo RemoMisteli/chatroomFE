@@ -29,7 +29,8 @@ h1{
 .description{
     text-align: center;
 }
-.chatMessages {
+#chatMessages {
+    width: 50%;
     border-style: solid;
     border-color: black;
     margin-bottom: 10px;
@@ -55,3 +56,22 @@ h1{
 .inputs{
     margin-bottom: 10px;
 }
+#messageTable{
+    width: 100%;
+}
+.tdUser{
+ width: 1px;
+font-size: 85%;
+vertical-align: top;
+    
+}
+.tdMessage{
+    padding-left: 10px;
+}
+.tdDate{
+    text-align: right;
+    font-size: 85%;
+    vertical-align: bottom;
+    width: 70px;
+}
+

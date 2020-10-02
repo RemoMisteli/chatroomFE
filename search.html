@@ -30,9 +30,9 @@
     </div>
 
 
-    <div class="chatMessages element" id="chatMessages">
-        <div id="messagesField">
-        </div>
+    <div class="element" id="chatMessages">
+        <table id="messageTable">
+        </table>
     </div>
 
 </body>
@@ -53,7 +53,7 @@
 
         if (searchAtributte != '') {
             cleanResults()
-            messages=null;
+            messages = null;
 
             var searchUrl = url + searchFor + "/" + searchAtributte;
 
@@ -78,25 +78,39 @@
 
             if (document.getElementById("messageId-" + messages[i].id) == null) {
 
-                var element = document.createElement("div");
+                var row = document.createElement("tr");
 
-                var textValue = document.createTextNode(messages[i].user + ": " + messages[i].message + " | " + formatDate(messages[i].date));
+                var tdUser = document.createElement("td");
+                var tdMessage = document.createElement("td");
+                var tdDate = document.createElement("td");
+
+                tdUser.className = "tdUser";
+                tdMessage.className = "tdMessage";
+                tdDate.className = "tdDate";
+
+                tdUser.appendChild(document.createTextNode(messages[i].user));
+                tdMessage.appendChild(document.createTextNode(messages[i].message));
+                tdDate.appendChild(document.createTextNode(formatDate(messages[i].date)));
+
+                row.appendChild(tdUser);
+                row.appendChild(tdMessage);
+                row.appendChild(tdDate);
+
+                row.id = "messageId-" + messages[i].id;
 
 
-                element.appendChild(textValue);
 
-                element.id = "messageId-" + messages[i].id;
-
-
-                var parentElement = document.getElementById("messagesField");
-                parentElement.appendChild(element);
+                var parentElement = document.getElementById("messageTable");
+                parentElement.appendChild(row);
 
             }
         }
     }
 
-    function cleanResults(){
-         document.getElementById("messagesField").innerHTML='';
+
+
+    function cleanResults() {
+        document.getElementById("messageTable").innerHTML = '';
     }
 
 </script>
