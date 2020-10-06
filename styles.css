@@ -5,6 +5,7 @@ body{
 .element {
     margin: auto;
     width: 50%;
+    padding-top: 5px;
 }
 h1{
     margin: 0px;
@@ -56,9 +57,10 @@ h1{
 .inputs{
     margin-bottom: 10px;
 }
-#messageTable{
+#messageTable ,#searchMessageTable{
     width: 100%;
 }
+
 .tdUser{
  width: 1px;
 font-size: 85%;
@@ -74,4 +76,12 @@ vertical-align: top;
     vertical-align: bottom;
     width: 70px;
 }
+.checkbox{
+    text-align: right;
+    width: 1px;
+}
+.deleteButton button{
+    width: 100%;
 
+
+}

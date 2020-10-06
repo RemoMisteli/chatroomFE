@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>ChatRoom</title>
+</head>
+
+<body>
+    <div class="title">
+        <h1>ChatRoom</h1>
+        <a class="active" href="index.html">ChatRoom</a>
+        <a class="" href="search.html">Search</a>
+
+    </div>
+
+    <div class="element description">
+        <p>This admin Page is her to manage messages</p>
+    </div>
+
+
+
+    <div class="element" id="chatMessages">
+        <table id="messageTable">
+        </table>
+    </div>
+
+    <div class="element deleteButton">
+
+        <button onclick="deleteMessages()">Delete</button>
+
+    </div>
+
+
+    <div class="element inputs">
+        Search:
+        <select id="searchedFor">
+            <option value="message">Message</option>
+            <option value="user">User</option>
+        </select>
+        <input id="searchField">
+        <button class="sendButton" onclick="search()">send</button>
+    </div>
+
+
+
+    <div class="element" id="chatMessages">
+        <table id="searchMessageTable">
+        </table>
+    </div>
+    
+    <div class="element deleteButton">
+
+        <button onclick="deleteMessages()">Delete</button>
+
+    </div>
+
+</body>
+
+</html>
+
+
+<script>
+    function writeToHtml(chatTable, messages) {
+
+        for (var i = 0; i < messages.length; i++) {
+
+
+            if (document.getElementById("messageId-" + messages[i].id) == null || document.getElementById("messageId-" + messages[i].id).parentElement.id != chatTable) {
+
+
+
+                var row = document.createElement("tr");
+
+                var tdUser = document.createElement("td");
+                var tdMessage = document.createElement("td");
+                var tdDate = document.createElement("td");
+                var tdCheckbox = document.createElement("td");
+
+                var checkbox = document.createElement("input");
+
+                checkbox.type = "checkbox";
+
+                checkbox.value = messages[i].id;
+
+                tdUser.className = "tdUser";
+                tdMessage.className = "tdMessage";
+                tdDate.className = "tdDate";
+                tdCheckbox.className = "checkbox";
+
+                tdUser.appendChild(document.createTextNode(messages[i].user));
+                tdMessage.appendChild(document.createTextNode(messages[i].message));
+                tdDate.appendChild(document.createTextNode(formatDate(messages[i].date)));
+
+                row.appendChild(tdUser);
+                row.appendChild(tdMessage);
+                row.appendChild(tdDate);
+
+                row.id = "messageId-" + messages[i].id;
+
+                tdCheckbox.appendChild(checkbox);
+                row.appendChild(tdCheckbox);
+
+
+                var parentElement = document.getElementById(chatTable);
+                parentElement.appendChild(row);
+
+
+            }
+        }
+    }
+
+
+</script>
+
+
+
+<script>window.onload = function () {
+        getMessage();
+    };
+    window.setInterval(function () {
+        getMessage();
+    }, 500);
+</script>
+
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    var url = "http://localhost:8080/chatroom/messages/";
+
+
+    function getMessage() {
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                ;
+                writeToHtml("messageTable", JSON.parse(this.responseText));
+
+            }
+        };
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    }
+
+</script>
+
+<script>
+    function send() {
+        var sendUrl = url + "send/";
+        var name = document.getElementById('usernameField').value;
+        var message = document.getElementById('messageField').value;
+        if (name != '' && message != '') {
+            document.getElementById('usernameField').value = "";
+            document.getElementById('messageField').value = "";
+
+            sendUrl = sendUrl + name + "/";
+            sendUrl = sendUrl + message;
+
+            xmlhttp.open("GET", sendUrl, true);
+            xmlhttp.send();
+
+            getMessage();
+        }
+
+
+
+    }
+</script>
+<script>
+    function formatDate(date) {
+        var today = new Date();
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+
+        if (today.getDate() == day && today.getMonth() + 1 == month && today.getFullYear() == year) {
+
+            return [d.getHours(), d.getMinutes()].join(':');
+
+        } else {
+
+
+            return [day, month, year].join('-');
+
+        }
+    }
+</script>
+
+
+
+<script>
+    function deleteMessages() {
+
+        var deleteUrl = "http://localhost:8080/chatroom/messages/";
+        var deletUrlSecondPart = "/delete";
+
+        var checkedMessages = document.querySelectorAll(':checked');
+        if (checkedMessages.length) {
+
+            var messagesId = [];
+            checkedMessages.forEach(element => {
+
+                messagesId.push(element.value);
+
+                removeFromList(element.value);
+            });
+
+            xmlhttp.open("DELETE", deleteUrl + messagesId.toString() + deletUrlSecondPart, true);
+            xmlhttp.send();
+
+        }
+    }
+
+    function removeFromList(id) {
+
+        document.getElementById("messageId-" + id).outerHTML = '';
+    }
+
+</script>
+
+<script>
+    var searchBasisUrl = "http://localhost:8080/chatroom/messages/search/";
+
+
+    function search() {
+
+        debugger
+        var searchFor = document.getElementById('searchedFor').value;
+        var searchAtributte = document.getElementById('searchField').value;
+
+
+        if (searchAtributte != '') {
+            document.getElementById("searchMessageTable").innerHTML = '';
+
+            var searchUrl = searchBasisUrl + searchFor + "/" + searchAtributte;
+
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    writeToHtml("searchMessageTable", JSON.parse(this.responseText));
+
+                }
+            };
+            xmlhttp.open("GET", searchUrl, true);
+            xmlhttp.send();
+        }
+    }
+
+
+</script>
