@@ -9,8 +9,9 @@
 <body>
     <div class="title">
         <h1>ChatRoom</h1>
-        <a class="active" href="index.html">ChatRoom</a>
+        <a class="" href="index.html">ChatRoom</a>
         <a class="" href="search.html">Search</a>
+        <a class="active" href="adminpage.html">Adminpage</a>
 
     </div>
 
@@ -200,25 +201,37 @@
         var deletUrlSecondPart = "/delete";
 
         var checkedMessages = document.querySelectorAll(':checked');
-        if (checkedMessages.length) {
 
+//because dropdown also write valu in here
+        
+        
+
+
+        if (checkedMessages.length) {
+debugger
             var messagesId = [];
             checkedMessages.forEach(element => {
-
+                if( element.value!="user" && element.value!="message"){
+           
                 messagesId.push(element.value);
 
                 removeFromList(element.value);
+
+                }
             });
+            console.log( messagesId.toString())
 
             xmlhttp.open("DELETE", deleteUrl + messagesId.toString() + deletUrlSecondPart, true);
             xmlhttp.send();
 
         }
     }
-
+    
+// no solved realy good
     function removeFromList(id) {
-
         document.getElementById("messageId-" + id).outerHTML = '';
+        document.getElementById("messageId-" + id).outerHTML = '';
+
     }
 
 </script>
@@ -229,7 +242,7 @@
 
     function search() {
 
-        debugger
+        
         var searchFor = document.getElementById('searchedFor').value;
         var searchAtributte = document.getElementById('searchField').value;
 
