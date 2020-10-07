@@ -90,7 +90,15 @@
                 tdCheckbox.className = "checkbox";
 
                 tdUser.appendChild(document.createTextNode(messages[i].user));
-                tdMessage.innerHTML = replaceEmotij(decodeQuestionmark(messages[i].message));
+
+                if(chatTable=="searchMessageTable"){
+                    console.log("kjhdfglkjsdflkjhslkdjfhgkjdsfhg");
+                    tdMessage.innerHTML =markSearchedString(replaceEmotij(decodeQuestionmark(messages[i].message)),searchAtributte);
+
+                }else{
+                    tdMessage.innerHTML = replaceEmotij(decodeQuestionmark(messages[i].message));
+
+                }
 
                 tdDate.appendChild(document.createTextNode(formatDate(messages[i].date)));
 
@@ -235,13 +243,13 @@ getMessage();
 
 <script>
     var searchBasisUrl = "http://localhost:8080/chatroom/messages/search/";
-
-
+    var searchFor;
+        var searchAtributte;
     function search() {
 
         
-        var searchFor = document.getElementById('searchedFor').value;
-        var searchAtributte = document.getElementById('searchField').value;
+         searchFor = document.getElementById('searchedFor').value;
+         searchAtributte = document.getElementById('searchField').value;
 
 
         if (searchAtributte != '') {
@@ -329,4 +337,10 @@ getMessage();
         return message;
     }
 
+</script>
+<script>
+    function markSearchedString(message,searchedString){
+
+        return message.replaceAll(searchedString,"<span class='searched'>"+searchedString+"</span>")
+    }
 </script>

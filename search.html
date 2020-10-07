@@ -46,11 +46,17 @@
 
     var messages;
 
+    
+    var searchFor;
+        var searchAtributte;
+
+
+     
     function search() {
 
 
-        var searchFor = document.getElementById('searchedFor').value;
-        var searchAtributte = document.getElementById('searchField').value;
+         searchFor = document.getElementById('searchedFor').value;
+         searchAtributte = document.getElementById('searchField').value;
 
 
         if (searchAtributte != '') {
@@ -90,7 +96,7 @@ for (var i = 0; i < messages.length; i++) {
 
 
         bubbleUser.appendChild(document.createTextNode(messages[i].user));
-        bubbleMessage.innerHTML = replaceEmotij(decodeQuestionmark(messages[i].message));
+        bubbleMessage.innerHTML =markSearchedString(replaceEmotij(decodeQuestionmark(messages[i].message)),searchAtributte);
         bubbleDate.appendChild(document.createTextNode(formatDate(messages[i].date)));
 
 
@@ -216,5 +222,13 @@ for (var i = 0; i < messages.length; i++) {
         return message;
     }
 
+</script>
+
+
+<script>
+    function markSearchedString(message,searchedString){
+
+        return message.replaceAll(searchedString,"<span class='searched'>"+searchedString+"</span>")
+    }
 </script>
 </html>
