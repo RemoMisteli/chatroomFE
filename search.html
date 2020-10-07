@@ -90,7 +90,7 @@ for (var i = 0; i < messages.length; i++) {
 
 
         bubbleUser.appendChild(document.createTextNode(messages[i].user));
-        bubbleMessage.appendChild(document.createTextNode(messages[i].message));
+        bubbleMessage.innerHTML = replaceEmotij(decodeQuestionmark(messages[i].message));
         bubbleDate.appendChild(document.createTextNode(formatDate(messages[i].date)));
 
 
@@ -150,4 +150,71 @@ for (var i = 0; i < messages.length; i++) {
     }
 </script>
 
+<script>
+
+    // becaus ? dosent't work on a get reques(when you send date) and the get request is yused only because its a testproject for aprentices.
+    var questionmarkString = "'',.''";
+    var slashString = "''''...''''";
+    var hashtagString = "''''......";
+    var cornerOString = "....'''''....'";
+    var cornerCStrin = "------....----";
+    var semicolonString = "..''''.....'";
+    function questionmarkReplce(message) {
+        message = message.replaceAll("?", questionmarkString);
+
+        message = message.replaceAll("/", slashString);
+
+        message = message.replaceAll("#", hashtagString);
+
+        message = message.replaceAll("[", cornerOString);
+        message = message.replaceAll("]", cornerCStrin);
+        message = message.replaceAll(";", semicolonString);
+
+
+
+
+
+        return message;
+
+
+    }
+    function decodeQuestionmark(message) {
+
+        message = message.replaceAll(questionmarkString, "?");
+
+        message = message.replaceAll(slashString, "/");
+
+        message = message.replaceAll(hashtagString, "#");
+
+        message = message.replaceAll(cornerOString, "[");
+        message = message.replaceAll(cornerCStrin, "]");
+        message = message.replaceAll(semicolonString, ";");
+
+        return message;
+    }
+
+
+</script>
+<script>
+    var unicqueCode = "&#x";
+    function replaceEmotij(message) {
+
+        message = message.replaceAll("3:)", unicqueCode + "1F608");
+        message = message.replaceAll("o:)", unicqueCode + "1F607");
+        message = message.replaceAll(":)", unicqueCode + "1F600");
+        message = message.replaceAll(";)", unicqueCode + "1F609");
+        message = message.replaceAll("Trump", unicqueCode + "1F4A9");
+        message = message.replaceAll("-_-", unicqueCode + "1F611");
+        message = message.replaceAll(":(", unicqueCode + "1F61E");
+        message = message.replaceAll(":o", unicqueCode + "1F62F");
+        message = message.replaceAll("<3", unicqueCode + "1F496");
+        message = message.replaceAll(":||", unicqueCode + "1F637");
+       
+
+
+
+        return message;
+    }
+
+</script>
 </html>

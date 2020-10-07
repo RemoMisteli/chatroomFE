@@ -4,6 +4,8 @@
 <head>
     <link rel="stylesheet" href="styles.css">
     <title>ChatRoom</title>
+    <meta charset="UTF-8">
+
 </head>
 
 <body>
@@ -24,6 +26,7 @@
 
     <div class="element chat" id="chatMessages">
         <div id="message">
+
         </div>
     </div>
 
@@ -39,12 +42,12 @@
 
     <script>
 
-var user;
+        var user;
 
 
         function writeToHtml() {
-            if(document.getElementById('usernameField').value !=user){
-                user=document.getElementById('usernameField').value;
+            if (document.getElementById('usernameField').value != user) {
+                user = document.getElementById('usernameField').value;
                 document.getElementById("message").innerHTML = '';
 
             }
@@ -63,9 +66,9 @@ var user;
 
 
                     bubbleUser.appendChild(document.createTextNode(messages[i].user));
-                    bubbleMessage.appendChild(document.createTextNode(messages[i].message));
-                    bubbleDate.appendChild(document.createTextNode(formatDate(messages[i].date)));
+                    bubbleMessage.innerHTML = replaceEmotij(decodeQuestionmark(messages[i].message));
 
+                    bubbleDate.appendChild(document.createTextNode(formatDate(messages[i].date)));
 
                     if (document.getElementById('usernameField').value == messages[i].user) {
                         bubble.className = "myBubble";
@@ -97,8 +100,73 @@ var user;
         }
 
     </script>
+    <script>
+
+        // becaus ? dosent't work on a get reques(when you send date) and the get request is yused only because its a testproject for aprentices.
+        var questionmarkString = "'',.''";
+        var slashString = "''''...''''";
+        var hashtagString = "''''......";
+        var cornerOString = "....'''''....'";
+        var cornerCStrin = "------....----";
+        var semicolonString = "..''''.....'";
+        function questionmarkReplce(message) {
+            message = message.replaceAll("?", questionmarkString);
+
+            message = message.replaceAll("/", slashString);
+
+            message = message.replaceAll("#", hashtagString);
+
+            message = message.replaceAll("[", cornerOString);
+            message = message.replaceAll("]", cornerCStrin);
+            message = message.replaceAll(";", semicolonString);
 
 
+
+
+
+            return message;
+
+
+        }
+        function decodeQuestionmark(message) {
+
+            message = message.replaceAll(questionmarkString, "?");
+
+            message = message.replaceAll(slashString, "/");
+
+            message = message.replaceAll(hashtagString, "#");
+
+            message = message.replaceAll(cornerOString, "[");
+            message = message.replaceAll(cornerCStrin, "]");
+            message = message.replaceAll(semicolonString, ";");
+
+            return message;
+        }
+
+
+    </script>
+    <script>
+        var unicqueCode = "&#x";
+        function replaceEmotij(message) {
+
+            message = message.replaceAll("3:)", unicqueCode + "1F608");
+            message = message.replaceAll("o:)", unicqueCode + "1F607");
+            message = message.replaceAll(":)", unicqueCode + "1F600");
+            message = message.replaceAll(";)", unicqueCode + "1F609");
+            message = message.replaceAll("Trump", unicqueCode + "1F4A9");
+            message = message.replaceAll("-_-", unicqueCode + "1F611");
+            message = message.replaceAll(":(", unicqueCode + "1F61E");
+            message = message.replaceAll(":o", unicqueCode + "1F62F");
+            message = message.replaceAll("<3", unicqueCode + "1F496");
+            message = message.replaceAll(":||", unicqueCode + "1F637");
+           
+
+
+
+            return message;
+        }
+
+    </script>
 
     <script>window.onload = function () {
             getMessage();
@@ -132,7 +200,7 @@ var user;
         function send() {
             var sendUrl = url + "send/";
             var name = document.getElementById('usernameField').value;
-            var message = document.getElementById('messageField').value;
+            var message = questionmarkReplce(document.getElementById('messageField').value);
             if (name != '' && message != '') {
 
                 document.getElementById('messageField').value = "";
