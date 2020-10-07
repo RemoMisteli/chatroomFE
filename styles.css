@@ -1,4 +1,4 @@
-body{
+body {
     margin: 0px;
 }
 
@@ -7,81 +7,135 @@ body{
     width: 50%;
     padding-top: 5px;
 }
-h1{
-    margin: 0px;
 
+h1 {
+    margin: 0px;
 }
-.title{
+
+.title {
     text-align: center;
     background-color: black;
     color: white;
-
 }
-.title a{
+
+.title a {
     color: white;
-    text-decoration: none;  
-
+    text-decoration: none;
 }
-.active{
+
+.active {
     font-weight: bold;
 }
 
-
-.description{
+.description {
     text-align: center;
 }
+
 #chatMessages {
     width: 50%;
     border-style: solid;
     border-color: black;
     margin-bottom: 10px;
     padding: 10px;
-    height: 400px;
+    height: 800px;
     overflow-y: scroll;
 }
-.chat{
+
+.chat {
     display: flex;
     flex-direction: column-reverse;
 }
-.usernNameField{
-    width: 10%;
 
+.usernNameField {
+    width: 10%;
 }
-.messageField{
+
+.messageField {
     width: 50%;
 }
-.sendButton{
+
+.sendButton {
     width: 10%;
     min-width: 50px;
 }
-.inputs{
+
+.inputs {
     margin-bottom: 10px;
 }
-#messageTable ,#searchMessageTable{
+
+#messageTable,
+#searchMessageTable {
     width: 100%;
 }
 
-.tdUser{
- width: 1px;
-font-size: 85%;
-vertical-align: top;
-    
+.tdUser {
+    width: 1px;
+    font-size: 85%;
+    vertical-align: top;
 }
-.tdMessage{
+
+.tdMessage {
     padding-left: 10px;
 }
-.tdDate{
+
+.tdDate {
     text-align: right;
     font-size: 85%;
     vertical-align: bottom;
     width: 70px;
 }
-.checkbox{
+
+.checkbox {
     text-align: right;
     width: 1px;
 }
-.deleteButton button{
+
+.deleteButton button {
     width: 100%;
+}
+
+.bubble {
+    position: relative;
+    background: #363636;
+    color: #FFFFFF;
+    font-size: 20px;
+    min-width: 200px;
+    width: min-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.bubble:after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    z-index: 1;
+    border-style: solid;
+    border-width: 15px 20px 0 0;
+    border-color: #363636 transparent transparent transparent;
+    bottom: -15px;
+    left: 20px;
+    margin-left: -12px;
+}
+
+.bubbleUser {
+    padding-top: 5px;
+    padding-bottom: 3px;
+    color: red;
+
+}
+
+.bubbleMessage {
 
 
+}
+
+.bubbleDate {
+    text-align: right;
+    padding-bottom: 5px;
+    padding-top: 3px;
+    font-size: 15px;
 }

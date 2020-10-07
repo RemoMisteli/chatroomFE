@@ -202,24 +202,25 @@
 
         var checkedMessages = document.querySelectorAll(':checked');
 
-//because dropdown also write valu in here
-        
+        document.getElementById("searchMessageTable").innerHTML = '';
+        search();
         
 
 
         if (checkedMessages.length) {
-debugger
+
             var messagesId = [];
             checkedMessages.forEach(element => {
                 if( element.value!="user" && element.value!="message"){
            
                 messagesId.push(element.value);
+                document.getElementById("messageTable").innerHTML = '';
 
-                removeFromList(element.value);
-
+getMessage();
                 }
             });
             console.log( messagesId.toString())
+            console.log(deleteUrl + messagesId.toString() + deletUrlSecondPart);
 
             xmlhttp.open("DELETE", deleteUrl + messagesId.toString() + deletUrlSecondPart, true);
             xmlhttp.send();
@@ -227,12 +228,7 @@ debugger
         }
     }
     
-// no solved realy good
-    function removeFromList(id) {
-        document.getElementById("messageId-" + id).outerHTML = '';
-        document.getElementById("messageId-" + id).outerHTML = '';
 
-    }
 
 </script>
 
@@ -248,6 +244,7 @@ debugger
 
 
         if (searchAtributte != '') {
+            
             document.getElementById("searchMessageTable").innerHTML = '';
 
             var searchUrl = searchBasisUrl + searchFor + "/" + searchAtributte;
