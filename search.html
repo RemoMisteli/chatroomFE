@@ -33,8 +33,8 @@
 
 
     <div class="element" id="chatMessages">
-        <table id="messageTable">
-        </table>
+        <div id="message">
+        </div>
     </div>
 
 </body>
@@ -74,45 +74,52 @@
 </script>
 
 <script>
-    function writeToHtml() {
+     function writeToHtml() {
 
-        for (var i = 0; i < messages.length; i++) {
+for (var i = 0; i < messages.length; i++) {
 
-            if (document.getElementById("messageId-" + messages[i].id) == null) {
+    if (document.getElementById("messageId-" + messages[i].id) == null) {
 
-                var row = document.createElement("tr");
+        var bubble = document.createElement("div");
 
-                var tdUser = document.createElement("td");
-                var tdMessage = document.createElement("td");
-                var tdDate = document.createElement("td");
+        var bubbleMessage = document.createElement("div");
 
-                tdUser.className = "tdUser";
-                tdMessage.className = "tdMessage";
-                tdDate.className = "tdDate";
+        var bubbleUser = document.createElement("div");
 
-                tdUser.appendChild(document.createTextNode(messages[i].user));
-                tdMessage.appendChild(document.createTextNode(messages[i].message));
-                tdDate.appendChild(document.createTextNode(formatDate(messages[i].date)));
-
-                row.appendChild(tdUser);
-                row.appendChild(tdMessage);
-                row.appendChild(tdDate);
-
-                row.id = "messageId-" + messages[i].id;
+        var bubbleDate = document.createElement("div");
 
 
+        bubbleUser.appendChild(document.createTextNode(messages[i].user));
+        bubbleMessage.appendChild(document.createTextNode(messages[i].message));
+        bubbleDate.appendChild(document.createTextNode(formatDate(messages[i].date)));
 
-                var parentElement = document.getElementById("messageTable");
-                parentElement.appendChild(row);
 
-            }
-        }
+        bubble.className = "bubble";
+
+        bubbleUser.className = "bubbleUser";
+        bubbleMessage.className = "bubbleMessage";
+        bubbleDate.className = "bubbleDate";
+
+
+        bubble.appendChild(bubbleUser);
+        bubble.appendChild(bubbleMessage);
+        bubble.appendChild(bubbleDate);
+
+        bubble.id = "messageId-" + messages[i].id;
+
+
+
+        var parentElement = document.getElementById("message");
+        parentElement.appendChild(bubble);
+
     }
+}
+}
 
 
 
     function cleanResults() {
-        document.getElementById("messageTable").innerHTML = '';
+        document.getElementById("message").innerHTML = '';
     }
 
 </script>

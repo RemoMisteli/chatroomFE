@@ -23,8 +23,8 @@
 
 
     <div class="element chat" id="chatMessages">
-        <table id="messageTable">
-        </table>
+        <div id="message">
+        </div>
     </div>
 
     <div class="element inputs">
@@ -38,7 +38,16 @@
 
 
     <script>
+
+var user;
+
+
         function writeToHtml() {
+            if(document.getElementById('usernameField').value !=user){
+                user=document.getElementById('usernameField').value;
+                document.getElementById("message").innerHTML = '';
+
+            }
 
             for (var i = 0; i < messages.length; i++) {
 
@@ -57,13 +66,20 @@
                     bubbleMessage.appendChild(document.createTextNode(messages[i].message));
                     bubbleDate.appendChild(document.createTextNode(formatDate(messages[i].date)));
 
-    
-                    bubble.className = "bubble";
 
-                    bubbleUser.className = "bubbleUser";
-                    bubbleMessage.className = "bubbleMessage";
-                    bubbleDate.className = "bubbleDate";
+                    if (document.getElementById('usernameField').value == messages[i].user) {
+                        bubble.className = "myBubble";
 
+                        bubbleUser.className = "myBubbleUser";
+                        bubbleMessage.className = "myBubbleMessage";
+                        bubbleDate.className = "myBubbleDate";
+                    } else {
+
+                        bubble.className = "bubble";
+                        bubbleUser.className = "bubbleUser";
+                        bubbleMessage.className = "bubbleMessage";
+                        bubbleDate.className = "bubbleDate";
+                    }
 
                     bubble.appendChild(bubbleUser);
                     bubble.appendChild(bubbleMessage);
@@ -73,7 +89,7 @@
 
 
 
-                    var parentElement = document.getElementById("messageTable");
+                    var parentElement = document.getElementById("message");
                     parentElement.appendChild(bubble);
 
                 }
@@ -118,7 +134,7 @@
             var name = document.getElementById('usernameField').value;
             var message = document.getElementById('messageField').value;
             if (name != '' && message != '') {
-                document.getElementById('usernameField').value = "";
+
                 document.getElementById('messageField').value = "";
 
                 sendUrl = sendUrl + name + "/";
