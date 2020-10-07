@@ -49,7 +49,7 @@
         <table id="searchMessageTable">
         </table>
     </div>
-    
+
     <div class="element deleteButton">
 
         <button onclick="deleteMessages()">Delete</button>
@@ -91,11 +91,10 @@
 
                 tdUser.appendChild(document.createTextNode(messages[i].user));
 
-                if(chatTable=="searchMessageTable"){
-                    console.log("kjhdfglkjsdflkjhslkdjfhgkjdsfhg");
-                    tdMessage.innerHTML =markSearchedString(replaceEmotij(decodeQuestionmark(messages[i].message)),searchAtributte);
+                if (chatTable == "searchMessageTable") {
+                    tdMessage.innerHTML = markSearchedString(replaceEmotij(decodeQuestionmark(messages[i].message)), searchAtributte);
 
-                }else{
+                } else {
                     tdMessage.innerHTML = replaceEmotij(decodeQuestionmark(messages[i].message));
 
                 }
@@ -213,30 +212,29 @@
 
         document.getElementById("searchMessageTable").innerHTML = '';
         search();
-        
+
 
 
         if (checkedMessages.length) {
 
             var messagesId = [];
             checkedMessages.forEach(element => {
-                if( element.value!="user" && element.value!="message"){
-           
-                messagesId.push(element.value);
-                document.getElementById("messageTable").innerHTML = '';
+                if (element.value != "user" && element.value != "message") {
 
-getMessage();
+                    messagesId.push(element.value);
+                    document.getElementById("messageTable").innerHTML = '';
+
+                    getMessage();
                 }
             });
-            console.log( messagesId.toString())
-            console.log(deleteUrl + messagesId.toString() + deletUrlSecondPart);
+
 
             xmlhttp.open("DELETE", deleteUrl + messagesId.toString() + deletUrlSecondPart, true);
             xmlhttp.send();
 
         }
     }
-    
+
 
 
 </script>
@@ -244,16 +242,16 @@ getMessage();
 <script>
     var searchBasisUrl = "http://localhost:8080/chatroom/messages/search/";
     var searchFor;
-        var searchAtributte;
+    var searchAtributte;
     function search() {
 
-        
-         searchFor = document.getElementById('searchedFor').value;
-         searchAtributte = document.getElementById('searchField').value;
+
+        searchFor = document.getElementById('searchedFor').value;
+        searchAtributte = document.getElementById('searchField').value;
 
 
         if (searchAtributte != '') {
-            
+
             document.getElementById("searchMessageTable").innerHTML = '';
 
             var searchUrl = searchBasisUrl + searchFor + "/" + searchAtributte;
@@ -330,7 +328,7 @@ getMessage();
         message = message.replaceAll(":o", unicqueCode + "1F62F");
         message = message.replaceAll("<3", unicqueCode + "1F496");
         message = message.replaceAll(":||", unicqueCode + "1F637");
-       
+
 
 
 
@@ -339,8 +337,8 @@ getMessage();
 
 </script>
 <script>
-    function markSearchedString(message,searchedString){
+    function markSearchedString(message, searchedString) {
 
-        return message.replaceAll(searchedString,"<span class='searched'>"+searchedString+"</span>")
+        return message.replaceAll(searchedString, "<span class='searched'>" + searchedString + "</span>")
     }
 </script>
