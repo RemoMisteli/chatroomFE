@@ -134,13 +134,14 @@
 
 <script>
     var xmlhttp = new XMLHttpRequest();
-    var url = "http://localhost:8080/chatroom/messages/";
+    var host="http://remospi.hopto.org:8080/remo";
+    var url = host+"/chatroom/messages/";
 
 
     function getMessage() {
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                ;
+                
                 writeToHtml("messageTable", JSON.parse(this.responseText));
 
             }
@@ -205,7 +206,7 @@
 <script>
     function deleteMessages() {
 
-        var deleteUrl = "http://localhost:8080/chatroom/messages/";
+        var deleteUrl = host+"/chatroom/messages/";
         var deletUrlSecondPart = "/delete";
 
         var checkedMessages = document.querySelectorAll(':checked');
@@ -240,7 +241,7 @@
 </script>
 
 <script>
-    var searchBasisUrl = "http://localhost:8080/chatroom/messages/search/";
+    var searchBasisUrl = host+"/chatroom/messages/search/";
     var searchFor;
     var searchAtributte;
     function search() {

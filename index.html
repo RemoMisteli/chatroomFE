@@ -173,12 +173,13 @@
         };
         window.setInterval(function () {
             getMessage();
-        }, 500);
+        }, 1000);
     </script>
 
     <script>
         var xmlhttp = new XMLHttpRequest();
-        var url = "http://localhost:8080/chatroom/messages/";
+        var host="http://remospi.hopto.org:8080/remo";
+        var url = host+"/chatroom/messages/";
 
         var messages;
 
